@@ -49,14 +49,21 @@ public class GBackuper {
                 help();
             }
 
-            PicasaBackuper picasa = new PicasaBackuper("./data", clientId, clientSecret, refreshToken);
+            do {
+                PicasaBackuper picasa = new PicasaBackuper("./data", clientId, clientSecret, refreshToken);
 
-            if (args.length > 0 && "full".equals(args[0])) {
-                System.out.println("Setting full sync on");
-                picasa.setFullSync(true);
-            }
+                if (args.length > 0 && "full".equals(args[0])) {
+                    System.out.println("Setting full sync on");
+                    picasa.setFullSync(true);
+                }
 
-            picasa.backup(userId);
+                picasa.backup(userId);
+
+                try {
+                    Thread.sleep(1000 * 3600 * 12); // update every 12 hours
+                } catch (InterruptedException ignored) {}
+
+            } while (true);
 
         } catch (RuntimeException e) {
             e.printStackTrace();
