@@ -50,7 +50,7 @@ public class GBackuper {
             }
 
             do {
-                PicasaBackuper picasa = new PicasaBackuper("./data", clientId, clientSecret, refreshToken);
+                PicasaBackuper picasa = new PicasaBackuper(dataPath, clientId, clientSecret, refreshToken);
 
                 if (args.length > 0 && "full".equals(args[0])) {
                     System.out.println("Setting full sync on");
