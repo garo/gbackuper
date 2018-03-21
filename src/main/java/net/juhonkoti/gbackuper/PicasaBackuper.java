@@ -97,6 +97,8 @@ public class PicasaBackuper {
                 boolean previouslyDownloaded = downloadPhoto(albumId, albumName, "./data", photo);
                 if (previouslyDownloaded) {
                     alreadyDownloaded++;
+                } else {
+                    alreadyDownloaded--;
                 }
             }
 
@@ -104,7 +106,7 @@ public class PicasaBackuper {
             startIndex += batch.size();
             System.out.println("Fetched " + batch.size() + " photos, starting at index " + startIndex);
 
-            if (!fullSync && alreadyDownloaded > 4) {
+            if (!fullSync && alreadyDownloaded > 100) {
                 System.out.println("Found too many pictures which have already been downloaded from album " + albumId + ", so not going further. Turn full sync on to prevent this.");
                 return;
             }
