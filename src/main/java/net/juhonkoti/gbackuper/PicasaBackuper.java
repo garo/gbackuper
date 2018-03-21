@@ -23,6 +23,7 @@ public class PicasaBackuper {
 
     private String basePath;
     private PicasawebService picasa;
+    private GoogleCredential credential;
 
     private boolean fullSync;
 
@@ -33,7 +34,7 @@ public class PicasaBackuper {
             String[] SCOPESArray = {"https://picasaweb.google.com/data","http://picasaweb.google.com/data/feed/api"};
             final List SCOPES = Arrays.asList(SCOPESArray);
 
-            GoogleCredential credential = new GoogleCredential.Builder()
+            credential = new GoogleCredential.Builder()
                     .setTransport(new NetHttpTransport())
                     .setJsonFactory(JacksonFactory.getDefaultInstance())
                     .setClientSecrets(clientId, clientSecret)
@@ -64,6 +65,7 @@ public class PicasaBackuper {
         try {
             List<GphotoEntry> albums = fetchAlbums(userId);
             for (GphotoEntry album : albums) {
+
                 downloadAlbum(userId, album.getGphotoId(), album.getTitle().getPlainText());
             }
         } catch (ServiceException e) {
@@ -176,6 +178,7 @@ public class PicasaBackuper {
 
     private List<GphotoEntry> fetchBatchOfPhotos(String userId, String albumId, int startIndex, int maxResults) throws ServiceException {
         try {
+            credential.refreshToken();
             AlbumFeed photos = picasa.getFeed(new URL("https://picasaweb.google.com/data/feed/api/user/" + userId + "/albumid/" + albumId + "?v=2&imgmax=d&start-index=" + startIndex + "&max-results=" + maxResults),
                     AlbumFeed.class);
 /*
