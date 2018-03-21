@@ -94,7 +94,7 @@ public class PicasaBackuper {
         do {
             List<GphotoEntry> batch = fetchBatchOfPhotos(userId, albumId, startIndex, maxResults);
             for (GphotoEntry photo : batch) {
-                boolean previouslyDownloaded = downloadPhoto(albumId, albumName, "./data", photo);
+                boolean previouslyDownloaded = downloadPhoto(albumId, albumName, this.basePath, photo);
                 if (previouslyDownloaded) {
                     alreadyDownloaded++;
                 } else {
