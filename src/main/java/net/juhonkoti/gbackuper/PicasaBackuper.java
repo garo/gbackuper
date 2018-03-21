@@ -99,6 +99,9 @@ public class PicasaBackuper {
                     alreadyDownloaded++;
                 } else {
                     alreadyDownloaded--;
+                    if (alreadyDownloaded < 0) {
+                        alreadyDownloaded = 0;
+                    }
                 }
             }
 
